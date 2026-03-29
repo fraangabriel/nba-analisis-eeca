@@ -1,5 +1,0 @@
-DROP TABLE IF EXISTS game_info;
-
-DROP TABLE IF EXISTS player_stats;
-
-DROP TABLE IF EXISTS team_stats;
