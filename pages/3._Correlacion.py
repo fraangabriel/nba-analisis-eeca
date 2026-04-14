@@ -39,3 +39,22 @@ if not df.empty:
             st.success("Relación monótona significativa ✅")
 
     st.divider()
+
+    st.markdown("### 2. Interpretación por Rangos)")
+    def interpretar_rango(valor):
+        val = abs(valor)
+        if 0.00 <= val <= 0.30: return "Débil o Nula", "gray"
+        elif 0.31 <= val <= 0.60: return "Moderada", "blue"
+        elif 0.61 <= val <= 0.80: return "Fuerte", "orange"
+        else: return "Muy Fuerte", "green"
+
+    interp_p, color_p = interpretar_rango(m['r'])
+    interp_s, color_s = interpretar_rango(m['rho'])
+
+    st.write(f"La correlación de Pearson es **{interp_p}**.")
+    st.write(f"La correlación de Spearman es **{interp_s}**.")
+
+    # Gráfico interactivo
+    fig = px.scatter(df, x='avg_pace', y='avg_ppg', text='season', trendline="ols",
+                     title="Ritmo vs Puntos (Diagrama de Dispersión)")
+    st.plotly_chart(fig, use_container_width=True)
