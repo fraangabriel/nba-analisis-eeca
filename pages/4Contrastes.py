@@ -8,7 +8,6 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
-from modules.stats_logic import ajustar_regresion_lineal
 
 st.set_page_config(page_title="Contrastes NBA", layout="wide")
 st.title("📐 Contraste de Hipótesis: Ritmo vs Puntos")
@@ -33,6 +32,7 @@ df_raw = df_raw.rename(columns={
     'avg_pace': 'Pace', 
     'avg_efg': 'eFG%'
 })
+
 
 # ==================== FILTROS ====================
 with st.container():
@@ -161,15 +161,38 @@ with st.container():
 ➡️ Esto sugiere que otros factores (como la eficiencia de tiro) podrían tener mayor impacto.
 """
         st.warning(mensaje)
-        st.markdown("---")
 
-# ==================== NAVEGACIÓN ====================
+st.markdown("---")
+# ==================== INTERPRETACIÓN ADICIONAL ====================
+with st.expander("📖 ¿Qué significa el p-valor?"):
+    st.markdown(f"""
+    **p-valor = {p_valor:.4f}**
+    
+    - Si p-valor < 0.05: La relación es **estadísticamente significativa**
+    - Si p-valor ≥ 0.05: La relación **no es significativa**
+    
+    **En este caso:** {'p-valor < 0.05, por lo que rechazamos H₀' if p_valor < 0.05 else 'p-valor ≥ 0.05, por lo que no rechazamos H₀'}
+    
+    Esto significa que la probabilidad de obtener esta correlación por azar es del **{p_valor*100:.2f}%**.
+    """)
+
+# ==================== TABLA DE DATOS OPCIONAL ====================
+with st.expander("📋 Ver datos del período"):
+    df_show = df[['Temporada', 'Pace', 'PPG']].copy()
+    st.dataframe(df_show.round(2), use_container_width=True)
+    
+    csv = df_show.to_csv(index=False).encode('utf-8')
+    st.download_button("📥 Descargar CSV", data=csv, 
+                       file_name=f"contraste_pace_ppg_{inicio}_a_{fin}.csv", 
+                       mime="text/csv")
+
+st.markdown("---")# ==================== NAVEGACIÓN ====================
 col_n1, col_n2 = st.columns(2)
 with col_n1:
     if st.button("◀ Volver a Correlación", use_container_width=True):
         st.switch_page("pages/3Correlacion.py")
 with col_n2:
     if st.button("➡️ Ir a Regresión", use_container_width=True):
-        st.switch_page("pages/5Regresion.py")
+        st.switch_page("pages/5Regression.py")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **p-valor = {p_valor:.4f}** | **r = {r:.3f}**")
