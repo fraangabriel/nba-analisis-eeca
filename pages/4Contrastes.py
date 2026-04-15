@@ -192,7 +192,7 @@ with col_n1:
     if st.button("◀ Volver a Correlación", use_container_width=True):
         st.switch_page("pages/3Correlacion.py")
 with col_n2:
-    if st.button("➡️ Ir a Regresión", use_container_width=True):
-        st.switch_page("pages/5Regression.py")
+    if st.button("➡️ Ir a Regresion", use_container_width=True):
+        st.switch_page("pages/5Regresion.py")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **p-valor = {p_valor:.4f}** | **r = {r:.3f}**")
