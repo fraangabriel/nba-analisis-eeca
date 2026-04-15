@@ -221,6 +221,6 @@ with st.container():
         st.success("💡 El aumento en los puntos se debe a **mayor ritmo** y **mejor eficiencia**.")
     with col_c2:
         if st.button("➡️ Ir a Correlación", use_container_width=True):
-            st.switch_page("pages/3._Correlacion.py")
+            st.switch_page("pages/3Correlacion.py")
     
     st.info(f"📌 Período: {temporada_inicio} → {temporada_fin} | Temporadas: {len(df_filtrado)}")
