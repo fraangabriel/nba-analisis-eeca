@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+
+# Archivos que pueden llegar a ser muy pesados. Poco probable que se suban al repositorio
+*.json
+*.parquet
+*.sqlite3
+*.db
+*.zip
+*.tar.gz
+*.rar
+*.log
+
+# Archivos de credenciales. No hay mucho que explicar, no se debe mostrar esa informacion
+.env
+*.key
+*.pem
+credentials.json
+
+# Carpetas y archivos de editores
+.DS_Store
+.vscode/
+.idea/
