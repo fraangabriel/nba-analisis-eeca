@@ -9,9 +9,11 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
-from modules.stats_logic import ajustar_regresion_lineal
+from modules.stats_logic import ajustar_regresion_lineal, obtener_metricas_correlacion
 
 st.set_page_config(page_title="Contrastes y Confianza", layout="wide")
+
+st.title("⚖️ Contrastes y ANOVA")
 
 df = get_resumen_temporadas()
 
@@ -21,6 +23,8 @@ def seleccionar_variable(df):
     format_func = lambda x: "Ritmo (Pace)" if x == 'avg_pace' else "Eficiencia (eFG%)" 
     return st.selectbox("Variable para el Contraste:", options, format_func=format_func)
 
+
+st.header(" Contraste sobre la Pendiente ($B$)")
 # Funcion para crear el grafico de contraste, x = variable independiente
 def grafico_contraste(model,x):
     t_stat = model.tvalues[x]
@@ -46,8 +50,42 @@ def grafico_contraste(model,x):
 
 if not df.empty:
     variable_x = seleccionar_variable(df)
-
-    # LLamada a la funcion de regresion lineal
     model = ajustar_regresion_lineal(df, variable_x, 'avg_ppg')
-
+    metricas = obtener_metricas_correlacion(df, variable_x, 'avg_ppg')
+    
+    p_b = model.pvalues[variable_x]
+    
+    # Contraste de la pendiente (B).
+    if p_b < 0.05:
+        st.success(f"Como p-valor ({p_b:.4e}) < 0.05, se rechaza H0. La pendiente es significativa.")
+    else:
+        st.error(f"Como p-valor ({p_b:.4e}) > 0.05, no se rechaza H0.")
+        
     st.plotly_chart(grafico_contraste(model, variable_x), use_container_width=True)
+
+
+st.divider()
+st.header("2. Contraste sobre el Coeficiente de Correlación (ρ)")
+st.write("Estamos interesados en saber si la velocidad de juego y la anotación están asociadas en realidad")
+st.latex(r"H_0: \rho = 0")
+st.latex(r"H_1: \rho \neq 0")
+
+# Valor del coeficiente de correlacion
+c3, c4 = st.columns(2)
+with c3:
+    st.write("Coeficiente r de Pearson para medir la fuerza de la relación")
+    st.write(f"**Valor de r:** `{metricas['r']:.4f}`")
+with c4:
+    st.write("Estadística utilizada para comparar el coeficiente con una distribución t")
+    st.write(f"**Estadístico t:** `{metricas['t_r']:.4f}`")
+    st.write("Probabilidad de obtener el valor de t calculado")
+    st.write(f"**p-valor:** `{metricas['p_r']:.4e}`")
+    
+# Contraste de Rho
+if metricas['p_r'] < 0.05:
+        st.success(f"Rechazo H0: Como el p-valor ({metricas['p_r']:.4e}) < 0.05. Existe correlación significativa.")
+else:
+        st.error(f"No Rechazo H0: Como el p-valor ({metricas['p_r']:.4f}) > 0.05. No hay evidencia de correlación.")
+  
+
+
