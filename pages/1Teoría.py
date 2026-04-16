@@ -1,6 +1,6 @@
 import streamlit as st
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_secciones
 
 st.set_page_config(
     page_title="Teoría | NBA Analytics",
@@ -12,7 +12,7 @@ st.set_page_config(
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== INICIALIZAR ESTADO ====================
 if 'seccion_teoria' not in st.session_state:

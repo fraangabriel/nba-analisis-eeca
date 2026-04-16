@@ -5,7 +5,7 @@ import plotly.express as px
 import sys
 import os
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_secciones
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
@@ -48,7 +48,7 @@ st.markdown(
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== INICIALIZAR ESTADO ====================
 if 'seccion_regresion' not in st.session_state:

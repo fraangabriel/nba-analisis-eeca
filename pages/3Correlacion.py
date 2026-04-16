@@ -5,7 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import scipy.stats as stats
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar 
+from modules.sidebar import mostrar_sidebar_secciones 
 
 st.set_page_config(page_title="Correlación NBA", layout="wide")
 st.title("📉 Análisis de Correlación")
@@ -39,7 +39,7 @@ st.markdown(
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:

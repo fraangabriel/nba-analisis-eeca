@@ -1,7 +1,7 @@
 import streamlit as st
 from modules.database import get_resumen_temporadas
 from modules.style import aplicar_estilos_globales  
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_inicio
 
 st.set_page_config(
     page_title="NBA Analytics | Velocidad vs Eficiencia",
@@ -11,7 +11,7 @@ st.set_page_config(
 
 # Aplicar estilos globales
 aplicar_estilos_globales()  
-mostrar_sidebar()  # Mostrar el sidebar unificado
+mostrar_sidebar_inicio()
 
 # ==================== CONTENIDO PRINCIPAL ====================
 st.title("🏀 Velocidad vs Eficiencia: La Década que Cambió la NBA")
