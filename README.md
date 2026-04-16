@@ -65,7 +65,8 @@ La anotación creció mucho más que el ritmo y la efectividad por separado, lo 
 
 🔗 Enlaces a los Dashboards
 
-Herramienta	Enlace
+**Herramienta	Enlace**
+
 [![App de Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://nba-estadisticas.streamlit.app/)
 
 [![Power BI Report](https://img.shields.io/badge/Data_Report-Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/links/RE7sq9nTOG?ctid=4c818f79-ab84-4552-9b7c-2fe715b0d0d5&pbi_source=linkShare)
