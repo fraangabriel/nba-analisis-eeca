@@ -4,7 +4,7 @@ import plotly.graph_objects as go
 from scipy import stats
 import sys
 import os
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
@@ -85,8 +85,6 @@ if n < 4:
     st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
     st.stop()
 # ===== FIN VALIDACIÓN =====
-
-st.markdown("---")
 
 st.divider()
 # ==================== PLANTEAMIENTO DE HIPÓTESIS ====================

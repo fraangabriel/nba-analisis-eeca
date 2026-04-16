@@ -1,5 +1,5 @@
 import streamlit as st
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 from modules.navegacion import navegacion
 
@@ -27,8 +27,6 @@ with st.container(border=True):
         """
     )
 
-st.divider()
-
 with st.container(border=True):
     st.subheader("🧠 Interpretación final")
     st.info(
@@ -36,8 +34,6 @@ with st.container(border=True):
         La pregunta central del proyecto era si el aumento en los puntos por partido se debía principalmente al ritmo o a la puntería. La respuesta más sólida, a la luz del análisis, es que **el ritmo impulsa el crecimiento de la anotación**, pero **la eficiencia explica por qué ese crecimiento se ha vuelto sostenible y tan marcado** en la NBA moderna.
         """
     )
-
-st.divider()
 
 with st.container(border=True):
     st.subheader("🏀 Cierre")

@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 import sys
 import os
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 from modules.navegacion import navegacion
 
@@ -98,8 +98,6 @@ if n < 4:
     st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
     st.stop()
 # ===== FIN VALIDACIÓN =====
-
-st.markdown("---")
 
 # Validar mínimo de temporadas
 if n < 4:

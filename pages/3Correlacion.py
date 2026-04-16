@@ -3,7 +3,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import scipy.stats as stats
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 from modules.navegacion import navegacion
 
@@ -88,7 +88,6 @@ if n < 4:
     st.stop()
 # ===== FIN VALIDACIÓN =====
 
-st.markdown("---")
 st.divider()
 
 # ==================== SELECTOR DE VARIABLES ====================
