@@ -1,6 +1,14 @@
 import streamlit as st
+from modules.style import aplicar_estilos_globales
+from modules.sidebar import mostrar_sidebar
 
 st.set_page_config(page_title="Fundamentos Teóricos", layout="wide")
+
+# Aplicar estilos globales
+aplicar_estilos_globales()
+
+# Mostrar sidebar
+mostrar_sidebar()
 
 st.title("📖 Fundamentos de la Investigación")
 st.info("Basado en el programa de Estadística II - Escuela de Estadística y Ciencias Actuariales (UCV).")
