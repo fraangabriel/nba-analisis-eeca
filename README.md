@@ -17,7 +17,9 @@ Analizar la relación entre el incremento del ritmo de juego (Pace) y la anotaci
 ●	Monitorear la evolución histórica: Documentar el comportamiento del ritmo, los puntos por partido y la efectividad de tiro (eFG%) temporada tras temporada para identificar patrones de cambio.
 
 ●	Validar la correlación ritmo-anotación: Determinar estadísticamente si el aumento en la velocidad de las posesiones se traduce de manera directa en un incremento proporcional del marcador.
+●	Evaluar el impacto en la precisión: Analizar si jugar a una mayor velocidad beneficia o perjudica la efectividad de los tiros de campo de los equipos.  
 
-●	Evaluar el impacto en la precisión: Analizar si jugar a una mayor velocidad beneficia o perjudica la efectividad de los tiros de campo de los equipos.
+POWER BY =  https://app.powerbi.com/links/RE7sq9nTOG?ctid=4c818f79-ab84-4552-9b7c-2fe715b0d0d5&pbi_source=linkShare 
+STREAMLIT = https://nba-estadisticas.streamlit.app
 
 ●	Definir el factor de crecimiento: Identificar si el auge anotador de la última década es impulsado primordialmente por un mayor volumen de jugadas o por una mejora técnica en la puntería de los jugadores.
