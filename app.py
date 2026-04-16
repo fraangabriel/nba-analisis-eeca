@@ -18,6 +18,24 @@ st.title("🏀 Velocidad vs Eficiencia: La Década que Cambió la NBA")
 st.markdown("*Análisis estadístico de la transformación de la NBA (2013-2023)*")
 st.markdown("---")
 
+
+# ==================== BANNER HORIZONTAL ====================
+st.markdown(
+    """
+    <div style="
+        background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=2090');
+        background-size: cover;
+        background-position: center 30%;
+        height: 150px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    ">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Descripción del Proyecto
 with st.container(border=True):
     st.markdown("## 📋 Descripción del Proyecto")

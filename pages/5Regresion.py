@@ -16,6 +16,34 @@ st.title("🧪 Modelo de Regresión Lineal")
 st.markdown("Cuantificamos cómo el **ritmo de juego (Pace)** predice los **puntos por partido (PPG)** mediante un modelo de regresión lineal.")
 st.markdown("---")
 
+# ==================== BANNER OPCIÓN  ====================
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2076');
+        background-size: cover;
+        background-position: center;
+        height: 130px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.6rem; font-weight: bold; letter-spacing: 3px;">🧪 REGRESIÓN LINEAL</span>
+            <br>
+            <span style="color: white; font-size: 1rem;">Modelo Predictivo · R² · PPG = a + b·Pace</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
+
 # Aplicar estilos globales
 aplicar_estilos_globales()
 

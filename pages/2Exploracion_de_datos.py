@@ -10,6 +10,29 @@ st.set_page_config(page_title="Exploración NBA", layout="wide")
 st.title("📊 Exploración de Datos NBA (2013-2023)")
 st.markdown("---")
 
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069');
+        background-size: cover;
+        background-position: center;
+        height: 120px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.5rem; font-weight: bold;">📊 EVOLUCIÓN HISTÓRICA</span>
+            <br>
+            <span style="color: white;">Pace · PPG · eFG% (2013-2023)</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Aplicar estilos globales
 aplicar_estilos_globales()
 

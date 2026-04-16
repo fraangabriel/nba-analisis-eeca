@@ -14,6 +14,28 @@ st.set_page_config(page_title="Contrastes NBA", layout="wide")
 st.title("📐 Contraste de Hipótesis: Ritmo vs Puntos")
 st.markdown("Verificamos si la relación entre **ritmo de juego (Pace)** y **puntos por partido (PPG)** es estadísticamente significativa.")
 st.markdown("---")
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015');
+        background-size: cover;
+        background-position: center;
+        height: 120px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.5rem; font-weight: bold;">📐 PRUEBAS DE HIPÓTESIS</span>
+            <br>
+            <span style="color: white;">t-Student · p-valor · Región Crítica</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Aplicar estilos globales
 aplicar_estilos_globales()

@@ -22,6 +22,31 @@ if 'seccion_teoria' not in st.session_state:
 st.title("📖 Fundamentos Teóricos de la Investigación")
 st.markdown("*Marco conceptual y metodológico del estudio*")
 st.markdown("---")
+# ==================== BANNER ====================
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?q=80&w=2070');
+        background-size: cover;
+        background-position: center;
+        height: 130px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.6rem; font-weight: bold; letter-spacing: 3px;">📖 MARCO TEÓRICO</span>
+            <br>
+            <span style="color: white; font-size: 1rem;">Fundamentos Estadísticos y Metodología de Investigación</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 # ==================== BOTONES DE NAVEGACIÓN INTERNA ====================
 with st.container():

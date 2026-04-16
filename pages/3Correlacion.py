@@ -12,6 +12,29 @@ st.title("📉 Análisis de Correlación")
 st.markdown("Mide la relación entre ritmo de juego, puntos por partido y eficiencia de tiro mediante coeficientes estadísticos.")
 st.markdown("---")
 
+# ==================== BANNER CORRELACIÓN ====================
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070');
+        background-size: cover;
+        background-position: center;
+        height: 130px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.6rem; font-weight: bold;">📐 PRUEBAS DE HIPÓTESIS</span>
+            <br>
+            <span style="color: white; font-size: 1rem;">t-Student · p-valor · Región Crítica</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # Aplicar estilos globales
 aplicar_estilos_globales()
 
