@@ -41,7 +41,8 @@ def mostrar_sidebar_inicio():
     """Sidebar unificado para el inicio"""
     
     with st.sidebar:
-        st.markdown("# 🏀 NBA Analytics")
+        st.logo("assets/images/NBA_logo.png")
+        st.image("assets/images/NBA.png")
         st.divider()
         membrete()
         nav_sidebar()
@@ -51,7 +52,8 @@ def mostrar_sidebar_secciones():
     """Sidebar unificado para las secciones"""
 
     with st.sidebar:
-        st.markdown("# 🏀 NBA Analytics")
+        st.logo("assets/images/NBA_logo.png")
+        st.image("assets/images/NBA.png")
         nav_sidebar()
         metodologia_sidebar()
         membrete()

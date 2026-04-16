@@ -1,5 +1,5 @@
 import streamlit as st
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 from modules.navegacion import navegacion
 

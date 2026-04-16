@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import sqlite3
 from pathlib import Path
-from modules.style import aplicar_estilos_globales
+from assets.styles.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 from modules.navegacion import navegacion
 
