@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import sys
 import os
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
@@ -14,13 +14,41 @@ from modules.stats_logic import ajustar_regresion_lineal
 st.set_page_config(page_title="Regresión NBA", layout="wide")
 st.title("🧪 Modelo de Regresión Lineal")
 st.markdown("Cuantificamos cómo el **ritmo de juego (Pace)** predice los **puntos por partido (PPG)** mediante un modelo de regresión lineal.")
-st.markdown("---")
+st.divider()
+
+# ==================== BANNER OPCIÓN  ====================
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=2076');
+        background-size: cover;
+        background-position: center;
+        height: 130px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.6rem; font-weight: bold; letter-spacing: 3px;">🧪 REGRESIÓN LINEAL</span>
+            <br>
+            <span style="color: white; font-size: 1rem;">Modelo Predictivo · R² · PPG = a + b·Pace</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+
 
 # Aplicar estilos globales
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== INICIALIZAR ESTADO ====================
 if 'seccion_regresion' not in st.session_state:
@@ -63,13 +91,22 @@ idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
 n = len(df)
 
+# ===== VALIDACIÓN (agregar aquí) =====
+n = len(df)
+if n < 4:
+    st.warning(f"⚠️ **Temporadas insuficientes:** Seleccionaste solo {n} temporada(s). Para un análisis de correlación válido se necesitan al menos **4 temporadas**.")
+    st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
+    st.stop()
+# ===== FIN VALIDACIÓN =====
+
+st.markdown("---")
+
 # Validar mínimo de temporadas
 if n < 4:
     st.warning(f"⚠️ Seleccionaste solo {n} temporada(s). Para un análisis estadístico válido se recomiendan al menos 4 temporadas.")
     st.stop()
 
-st.markdown("---")
-st.markdown("---")
+st.divider()
 
 # ==================== CÁLCULOS DEL MODELO ====================
 # Ajustar modelo (se usa en ambas secciones)
@@ -100,7 +137,7 @@ with st.container():
         if st.button("🔮 Ver Predictor Interactivo", use_container_width=True):
             st.session_state.seccion_regresion = 'predictor'
 
-st.markdown("---")
+st.divider()
 
 
 # ==================== SECCIÓN 1: MODELO DE REGRESIÓN ====================
@@ -119,7 +156,7 @@ if st.session_state.seccion_regresion == 'modelo':
         with col_e4:
             st.metric("📊 R² Ajustado", f"{r2_adj:.4f}")
     
-    st.markdown("---")
+    st.divider()
     
     with st.container():
         st.subheader("📝 Ecuación del Modelo")
@@ -144,7 +181,7 @@ if st.session_state.seccion_regresion == 'modelo':
         ➡️ **Un aumento de 10 posesiones** se asocia con **{pendiente*10:.2f} puntos más** por partido.
         """)
     
-    st.markdown("---")
+    st.divider()
     
     with st.container():
         st.subheader("📊 Diagrama de Dispersión con Recta de Regresión")
@@ -159,7 +196,7 @@ if st.session_state.seccion_regresion == 'modelo':
         fig.update_layout(height=550)
         st.plotly_chart(fig, use_container_width=True)
     
-    st.markdown("---")
+    st.divider()
     
     with st.expander("📊 Ver análisis de residuos"):
         
@@ -235,7 +272,7 @@ else:
             fig_pred.update_layout(height=400)
             st.plotly_chart(fig_pred, use_container_width=True)
     
-    st.markdown("---")
+    st.divider()
     
     # Tabla comparativa de predicciones
     with st.expander("📊 Ver tabla comparativa de predicciones"):
@@ -263,7 +300,7 @@ with st.expander("📋 Ver datos originales del período"):
                        file_name=f"regresion_{inicio}_a_{fin}.csv", 
                        mime="text/csv")
 
-st.markdown("---")
+st.divider()
 
 # ==================== CONCLUSIÓN ====================
 with st.container():
@@ -306,15 +343,9 @@ with st.container():
         ➡️ Esto sugiere que el ritmo no es el principal factor; la eficiencia de tiro podría ser más importante.
         """)
 
-st.markdown("---")
+st.divider()
 
 # ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Contrastes", use_container_width=True):
-        st.switch_page("pages/4Contrastes.py")
-with col_n2:
-    if st.button("🏠 Ir a Inicio", use_container_width=True):
-        st.switch_page("app.py")
+navegacion("Contrastes", "Consultas")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **R² = {r2:.3f}**")

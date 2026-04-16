@@ -1,20 +1,43 @@
 import streamlit as st
-import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Exploración NBA", layout="wide")
 st.title("📊 Exploración de Datos NBA (2013-2023)")
-st.markdown("---")
+st.divider()
+
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=2069');
+        background-size: cover;
+        background-position: center;
+        height: 120px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.5rem; font-weight: bold;">📊 EVOLUCIÓN HISTÓRICA</span>
+            <br>
+            <span style="color: white;">Pace · PPG · eFG% (2013-2023)</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Aplicar estilos globales
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:
@@ -88,7 +111,7 @@ with st.container():
     with col_b3:
         st.session_state.mostrar_detalles = st.toggle("🔧 Ver detalles técnicos", value=st.session_state.mostrar_detalles)
 
-st.markdown("---")
+st.divider()
 
 # ==================== APLICAR FILTROS ====================
 idx_inicio = temporadas_disponibles.index(temporada_inicio)
@@ -127,7 +150,7 @@ with st.container():
         if st.session_state.mostrar_detalles:
             st.caption(f"Inicio: {efg_inicio:.3f}")
 
-st.markdown("---")
+st.divider()
 
 # ==================== BOTONES DE GRÁFICOS ====================
 with st.container():
@@ -151,7 +174,7 @@ with st.container():
         if st.button("📊 Comparación Triple", use_container_width=True):
             st.session_state.mostrar_comparacion_triple = True
     
-    st.markdown("---")
+    st.divider()
 
 # ==================== GRÁFICO PRINCIPAL ====================
 if not st.session_state.mostrar_comparacion_triple:
@@ -204,7 +227,7 @@ else:
             st.session_state.mostrar_comparacion_triple = False
             st.rerun()
 
-st.markdown("---")
+st.divider()
 
 # ==================== TABLA OPCIONAL ====================
 if mostrar_tabla:
@@ -219,16 +242,13 @@ if mostrar_tabla:
         csv = df_tabla.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Descargar CSV", data=csv, file_name=f"datos_nba_{temporada_inicio}_a_{temporada_fin}.csv",
                           mime="text/csv", use_container_width=True)
+    st.divider()
 
-st.markdown("---")
+
 
 # ==================== CONCLUSIÓN Y NAVEGACIÓN ====================
-with st.container():
-    col_c1, col_c2 = st.columns([2, 1])
-    with col_c1:
-        st.success("💡 El aumento en los puntos se debe a **mayor ritmo** y **mejor eficiencia**.")
-    with col_c2:
-        if st.button("➡️ Ir a Correlación", use_container_width=True):
-            st.switch_page("pages/3Correlacion.py")
-    
-    st.info(f"📌 Período: {temporada_inicio} → {temporada_fin} | Temporadas: {len(df_filtrado)}")
+st.success("💡 El aumento en los puntos se debe a **mayor ritmo** y **mejor eficiencia**.")
+st.info(f"📌 Período: {temporada_inicio} → {temporada_fin} | Temporadas: {len(df_filtrado)}")
+
+st.divider()
+navegacion("Teoría", "Correlación")

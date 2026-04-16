@@ -1,22 +1,45 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import scipy.stats as stats
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar 
+from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Correlación NBA", layout="wide")
 st.title("📉 Análisis de Correlación")
 st.markdown("Mide la relación entre ritmo de juego, puntos por partido y eficiencia de tiro mediante coeficientes estadísticos.")
-st.markdown("---")
+st.divider()
 
+# ==================== BANNER CORRELACIÓN ====================
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070');
+        background-size: cover;
+        background-position: center;
+        height: 130px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.6rem; font-weight: bold;">📐 PRUEBAS DE HIPÓTESIS</span>
+            <br>
+            <span style="color: white; font-size: 1rem;">t-Student · p-valor · Región Crítica</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 # Aplicar estilos globales
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:
@@ -57,8 +80,16 @@ with st.container():
 
 idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
+# ===== VALIDACIÓN (agregar aquí) =====
+n = len(df)
+if n < 4:
+    st.warning(f"⚠️ **Temporadas insuficientes:** Seleccionaste solo {n} temporada(s). Para un análisis de correlación válido se necesitan al menos **4 temporadas**.")
+    st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
+    st.stop()
+# ===== FIN VALIDACIÓN =====
 
 st.markdown("---")
+st.divider()
 
 # ==================== SELECTOR DE VARIABLES ====================
 with st.container():
@@ -85,7 +116,7 @@ with st.container():
         st.markdown("**Variable Dependiente (Y - Efecto)**")
         var_y = st.selectbox("Selecciona Y", list(vars_dict.keys()), index=0, format_func=lambda x: vars_dict[x], label_visibility="collapsed")
 
-st.markdown("---")
+st.divider()
 # ==================== BOTONES ARRIBA (como en exploración) ====================
 with st.container():
     st.subheader("🎯 Análisis disponibles")
@@ -108,7 +139,7 @@ with st.container():
         if st.button("🔄 Comparar", use_container_width=True):
             st.session_state.seccion_correlacion = 'comparar'
 
-st.markdown("---")
+st.divider()
 # ==================== CÁLCULOS BASE ====================
 x, y = df[var_x], df[var_y]
 n = len(df)
@@ -305,14 +336,7 @@ with st.expander("📋 Ver tabla completa de datos"):
     csv = df_show.to_csv(index=False).encode('utf-8')
     st.download_button("📥 Descargar CSV", data=csv, file_name=f"correlacion_{inicio}_a_{fin}.csv", mime="text/csv")
 
-st.markdown("---")
+st.divider()
 
 # ==================== NAVEGACIÓN ====================
-# ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Exploración", use_container_width=True):
-        st.switch_page("pages/2Exploracion_de_datos.py")  
-with col_n2:
-    if st.button("➡️ Ir a Contrastes", use_container_width=True):
-        st.switch_page("pages/4Contrastes.py")  
+navegacion("Exploración", "Contrastes")

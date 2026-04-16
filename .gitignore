@@ -8,7 +8,6 @@ env/
 
 # Archivos que pueden llegar a ser muy pesados. Poco probable que se suban al repositorio
 *.json
-*.parquet
 *.sqlite3
 *.db
 *.zip

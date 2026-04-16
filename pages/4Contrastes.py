@@ -1,25 +1,47 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from scipy import stats
 import sys
 import os
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar
+from modules.sidebar import mostrar_sidebar_secciones
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Contrastes NBA", layout="wide")
 st.title("📐 Contraste de Hipótesis: Ritmo vs Puntos")
 st.markdown("Verificamos si la relación entre **ritmo de juego (Pace)** y **puntos por partido (PPG)** es estadísticamente significativa.")
-st.markdown("---")
+st.divider()
+st.markdown(
+    """
+    <div style="
+        background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015');
+        background-size: cover;
+        background-position: center;
+        height: 120px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        <div style="text-align: center;">
+            <span style="color: white; font-size: 1.5rem; font-weight: bold;">📐 PRUEBAS DE HIPÓTESIS</span>
+            <br>
+            <span style="color: white;">t-Student · p-valor · Región Crítica</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Aplicar estilos globales
 aplicar_estilos_globales()
 
 # Mostrar sidebar
-mostrar_sidebar()
+mostrar_sidebar_secciones()
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:
     st.session_state['df_resumen'] = get_resumen_temporadas()
@@ -56,7 +78,17 @@ with st.container():
 idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
 
+# ===== VALIDACIÓN (agregar aquí) =====
+n = len(df)
+if n < 4:
+    st.warning(f"⚠️ **Temporadas insuficientes:** Seleccionaste solo {n} temporada(s). Para un análisis de correlación válido se necesitan al menos **4 temporadas**.")
+    st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
+    st.stop()
+# ===== FIN VALIDACIÓN =====
+
 st.markdown("---")
+
+st.divider()
 # ==================== PLANTEAMIENTO DE HIPÓTESIS ====================
 with st.container():
     st.subheader("🎯 Planteamiento de la Hipótesis")
@@ -70,7 +102,7 @@ with st.container():
     st.latex(r"H_0: \beta = 0 \quad \text{(la pendiente es cero)}")
     st.latex(r"H_1: \beta \neq 0 \quad \text{(la pendiente es distinta de cero)}")
 
-st.markdown("---")
+st.divider()
 # ==================== CÁLCULOS ====================
 # Calcular correlación y estadístico t
 x = df['Pace']
@@ -96,7 +128,7 @@ with st.container():
     with col_r4:
         st.metric("📋 Grados de libertad", f"{df_resid}")
 
-st.markdown("---")
+st.divider()
 # ==================== GRÁFICO REGIÓN CRÍTICA ====================
 with st.container():
     st.subheader("📈 Distribución t-Student y Región Crítica")
@@ -132,7 +164,7 @@ with st.container():
                       template="plotly_dark", height=500)
     st.plotly_chart(fig, use_container_width=True)
 
-st.markdown("---")
+st.divider()
 # ==================== DECISIÓN ESTADÍSTICA ====================
 with st.container():
     st.subheader("📌 Decisión Estadística")
@@ -168,7 +200,7 @@ with st.container():
 """
         st.warning(mensaje)
 
-st.markdown("---")
+st.divider()
 # ==================== INTERPRETACIÓN ADICIONAL ====================
 with st.expander("📖 ¿Qué significa el p-valor?"):
     st.markdown(f"""
@@ -192,13 +224,9 @@ with st.expander("📋 Ver datos del período"):
                        file_name=f"contraste_pace_ppg_{inicio}_a_{fin}.csv", 
                        mime="text/csv")
 
-st.markdown("---")# ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Correlación", use_container_width=True):
-        st.switch_page("pages/3Correlacion.py")
-with col_n2:
-    if st.button("➡️ Ir a Regresión", use_container_width=True):
-        st.switch_page("pages/5Regresion.py")
+st.divider()
+
+# ==================== NAVEGACIÓN ====================
+navegacion("Correlación", "Regresión")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **p-valor = {p_valor:.4f}** | **r = {r:.3f}**")

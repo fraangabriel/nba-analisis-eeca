@@ -1,16 +1,37 @@
-import sqlite3
-import pandas as pd
+from pathlib import Path
+import duckdb
 import streamlit as st
 
-DB_PATH = 'Base de Datos/Version_Normalizada/NBA-Boxscore-Database-Normalizado-Limpio.sqlite'
+PARQUET_DIR = Path("Data parquet") / "Version_Normalizada"
+TABLE_NAMES = (
+    "Equipos",
+    "Est_Equipos",
+    "Est_Jugadores",
+    "Jugadores",
+    "Partidos",
+    "Temporadas",
+)
 
-@st.cache_data
+@st.cache_resource
+def get_connection() -> duckdb.DuckDBPyConnection:
+    """Crea una conexión DuckDB con vistas sobre los Parquet normalizados."""
+    if not PARQUET_DIR.exists():
+        raise FileNotFoundError(f"No se encuentra el directorio de Parquet: {PARQUET_DIR}")
+    con = duckdb.connect(database=":memory:")
+
+    for table_name in TABLE_NAMES:
+        parquet_path = (PARQUET_DIR / f"{table_name}.parquet").as_posix()
+        con.execute(
+            f"CREATE OR REPLACE VIEW {table_name} AS "
+            f"SELECT * FROM read_parquet('{parquet_path}')"
+        )
+    return con
+
 def run_query(query):
     try:
-        with sqlite3.connect(DB_PATH) as conn:
-            return pd.read_sql(query, conn)
+        return get_connection().execute(query).df()
     except Exception as e:
-        st.error(f"No se pudo leer la base de datos: {e}")
+        st.error(f"No se pudo leer los Parquet normalizados: {e}")
         return pd.DataFrame()
 
 def get_resumen_temporadas():
