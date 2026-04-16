@@ -80,7 +80,15 @@ with st.container():
 
 idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
+# ===== VALIDACIÓN (agregar aquí) =====
+n = len(df)
+if n < 4:
+    st.warning(f"⚠️ **Temporadas insuficientes:** Seleccionaste solo {n} temporada(s). Para un análisis de correlación válido se necesitan al menos **4 temporadas**.")
+    st.info("💡 **Sugerencia:** Amplía el rango de temporadas para obtener resultados estadísticamente significativos.")
+    st.stop()
+# ===== FIN VALIDACIÓN =====
 
+st.markdown("---")
 st.divider()
 
 # ==================== SELECTOR DE VARIABLES ====================
