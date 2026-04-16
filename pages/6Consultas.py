@@ -76,13 +76,25 @@ with col_query:
         # 3. Mostrar el enunciado en un Expander si se selecciona una pregunta
         valor_sql = f"SELECT * FROM {selected} LIMIT 10" # Default
         
+        # Diccionario de interpretaciones
+        interpretaciones = {
+            "🏀 1: La Red de Asistencias y el Dúo Más Prolífico": "📌 **Interpretación:** Revela las duplas más letales de la última década. Combina al mejor asistente de la liga con un compañero Top 10 en anotación. El total combinado (puntos + asistencias) mide la producción ofensiva conjunta. Temporadas recientes muestran totales más altos debido al mayor ritmo de juego.",
+            
+            "🔄 2: Rendimiento Ofensivo en 'Back-to-Backs'": "📌 **Interpretación:** Cuantifica el impacto del cansancio en el rendimiento. Equipos con plantilla profunda (Clippers, Raptors) son menos afectados. Una caída >15% en el porcentaje de victorias sugiere falta de profundidad en la banca. Esta métrica es clave para evaluar estrategias de rotación.",
+            
+            "🔥 3: Rachas de Triples-Dobles e Impacto en Victoria": "📌 **Interpretación:** Los triples-dobles consecutivos son el sello de jugadores versátiles. Russell Westbrook (5 seguidos en 2017) y Nikola Jokić son ejemplos recientes. El margen de victoria promedio (Plus/Minus) indica si esas rachas se traducen en éxito colectivo. Valores > +10 sugieren dominio real; cercanos a cero indican estadísticas 'vistosas' pero no determinantes.",
+            
+            "📊 4: Brecha Estadística entre Titulares y Suplentes": "📌 **Interpretación:** Mide la profundidad de plantilla de cada equipo. Una brecha >60% en puntos indica alta dependencia de titulares (ej: Lakers 2023). Brechas bajas (<40%) sugieren bancas productivas (ej: Kings 2023). En asistencias, las brechas suelen ser más pronunciadas porque los bases titulares son los principales generadores.",
+            
+            "🏹 5: La Revolución del Triple y Evolución del Juego": "📌 **Interpretación:** Confirma estadísticamente la 'revolución del triple' en la NBA. Equipos como Houston Rockets (25% → 48%) y Golden State Warriors (28% → 42%) muestran los crecimientos más drásticos. El promedio de la liga pasó de ~22% (2014) a ~38% (2023), explicando en parte el aumento del ritmo (Pace) y los puntos por partido (PPG)."
+        }
+
         if not opcion_elegida.startswith("⌨️"):
             info = queries_info[opcion_elegida]
             
             with st.expander("📖 Ver Enunciado Completo"):
                 st.write(info["enunciado"])
             
-            # Cargar el archivo SQL
             QUERY_DIR = Path("Queries/Respuesta de Cuestionario")
             ruta_archivo = QUERY_DIR / info["archivo"]
             try:
@@ -98,9 +110,11 @@ with col_query:
             try:
                 res = pd.read_sql_query(sql, con)
                 st.dataframe(res, use_container_width=True)
+                
+                # Mostrar interpretación si es consulta predefinida
+                if not opcion_elegida.startswith("⌨️") and opcion_elegida in interpretaciones:
+                    st.info(interpretaciones[opcion_elegida])
+                
                 st.download_button("📥 Descargar CSV", res.to_csv(index=False), "resultado_nba.csv", "text/csv")
             except Exception as e:
                 st.error(f"Error en la consulta: {e}")
-
-st.divider()
-navegacion("Regresión", "Conclusión")
