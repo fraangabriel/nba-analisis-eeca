@@ -1,6 +1,7 @@
 import streamlit as st
 from modules.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 st.set_page_config(
     page_title="Teoría | NBA Analytics",
@@ -21,7 +22,7 @@ if 'seccion_teoria' not in st.session_state:
 # ==================== TÍTULO PRINCIPAL ====================
 st.title("📖 Fundamentos Teóricos de la Investigación")
 st.markdown("*Marco conceptual y metodológico del estudio*")
-st.markdown("---")
+st.divider()
 # ==================== BANNER ====================
 st.markdown(
     """
@@ -74,7 +75,7 @@ with st.container():
         if st.button("🔧 Datos", use_container_width=True, key="teo_dat"):
             st.session_state.seccion_teoria = 'datos'
 
-st.markdown("---")
+st.divider()
 
 # ==================== SECCIÓN 1: OBJETIVOS ====================
 if st.session_state.seccion_teoria == 'objetivos':
@@ -199,3 +200,6 @@ else:
         AVG((ee.FG + 0.5 * ee."3P") / NULLIF(ee.FGA, 0)) AS avg_efg
         """, language="sql")
         
+# ==================== NAVEGACIÓN ====================
+st.divider()
+navegacion("Inicio", "Exploración")

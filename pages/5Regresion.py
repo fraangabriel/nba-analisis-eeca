@@ -6,6 +6,7 @@ import sys
 import os
 from modules.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
@@ -14,7 +15,7 @@ from modules.stats_logic import ajustar_regresion_lineal
 st.set_page_config(page_title="Regresión NBA", layout="wide")
 st.title("🧪 Modelo de Regresión Lineal")
 st.markdown("Cuantificamos cómo el **ritmo de juego (Pace)** predice los **puntos por partido (PPG)** mediante un modelo de regresión lineal.")
-st.markdown("---")
+st.divider()
 
 # ==================== BANNER OPCIÓN  ====================
 st.markdown(
@@ -96,8 +97,8 @@ if n < 4:
     st.warning(f"⚠️ Seleccionaste solo {n} temporada(s). Para un análisis estadístico válido se recomiendan al menos 4 temporadas.")
     st.stop()
 
-st.markdown("---")
-st.markdown("---")
+st.divider()
+st.divider()
 
 # ==================== CÁLCULOS DEL MODELO ====================
 # Ajustar modelo (se usa en ambas secciones)
@@ -128,7 +129,7 @@ with st.container():
         if st.button("🔮 Ver Predictor Interactivo", use_container_width=True):
             st.session_state.seccion_regresion = 'predictor'
 
-st.markdown("---")
+st.divider()
 
 
 # ==================== SECCIÓN 1: MODELO DE REGRESIÓN ====================
@@ -147,7 +148,7 @@ if st.session_state.seccion_regresion == 'modelo':
         with col_e4:
             st.metric("📊 R² Ajustado", f"{r2_adj:.4f}")
     
-    st.markdown("---")
+    st.divider()
     
     with st.container():
         st.subheader("📝 Ecuación del Modelo")
@@ -172,7 +173,7 @@ if st.session_state.seccion_regresion == 'modelo':
         ➡️ **Un aumento de 10 posesiones** se asocia con **{pendiente*10:.2f} puntos más** por partido.
         """)
     
-    st.markdown("---")
+    st.divider()
     
     with st.container():
         st.subheader("📊 Diagrama de Dispersión con Recta de Regresión")
@@ -187,7 +188,7 @@ if st.session_state.seccion_regresion == 'modelo':
         fig.update_layout(height=550)
         st.plotly_chart(fig, use_container_width=True)
     
-    st.markdown("---")
+    st.divider()
     
     with st.expander("📊 Ver análisis de residuos"):
         
@@ -263,7 +264,7 @@ else:
             fig_pred.update_layout(height=400)
             st.plotly_chart(fig_pred, use_container_width=True)
     
-    st.markdown("---")
+    st.divider()
     
     # Tabla comparativa de predicciones
     with st.expander("📊 Ver tabla comparativa de predicciones"):
@@ -291,7 +292,7 @@ with st.expander("📋 Ver datos originales del período"):
                        file_name=f"regresion_{inicio}_a_{fin}.csv", 
                        mime="text/csv")
 
-st.markdown("---")
+st.divider()
 
 # ==================== CONCLUSIÓN ====================
 with st.container():
@@ -334,15 +335,9 @@ with st.container():
         ➡️ Esto sugiere que el ritmo no es el principal factor; la eficiencia de tiro podría ser más importante.
         """)
 
-st.markdown("---")
+st.divider()
 
 # ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Contrastes", use_container_width=True):
-        st.switch_page("pages/4Contrastes.py")
-with col_n2:
-    if st.button("🏠 Ir a Inicio", use_container_width=True):
-        st.switch_page("app.py")
+navegacion("Contrastes", "Consultas")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **R² = {r2:.3f}**")

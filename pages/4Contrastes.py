@@ -9,11 +9,12 @@ from modules.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Contrastes NBA", layout="wide")
 st.title("📐 Contraste de Hipótesis: Ritmo vs Puntos")
 st.markdown("Verificamos si la relación entre **ritmo de juego (Pace)** y **puntos por partido (PPG)** es estadísticamente significativa.")
-st.markdown("---")
+st.divider()
 st.markdown(
     """
     <div style="
@@ -78,7 +79,7 @@ with st.container():
 idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
 
-st.markdown("---")
+st.divider()
 # ==================== PLANTEAMIENTO DE HIPÓTESIS ====================
 with st.container():
     st.subheader("🎯 Planteamiento de la Hipótesis")
@@ -92,7 +93,7 @@ with st.container():
     st.latex(r"H_0: \beta = 0 \quad \text{(la pendiente es cero)}")
     st.latex(r"H_1: \beta \neq 0 \quad \text{(la pendiente es distinta de cero)}")
 
-st.markdown("---")
+st.divider()
 # ==================== CÁLCULOS ====================
 # Calcular correlación y estadístico t
 x = df['Pace']
@@ -118,7 +119,7 @@ with st.container():
     with col_r4:
         st.metric("📋 Grados de libertad", f"{df_resid}")
 
-st.markdown("---")
+st.divider()
 # ==================== GRÁFICO REGIÓN CRÍTICA ====================
 with st.container():
     st.subheader("📈 Distribución t-Student y Región Crítica")
@@ -154,7 +155,7 @@ with st.container():
                       template="plotly_dark", height=500)
     st.plotly_chart(fig, use_container_width=True)
 
-st.markdown("---")
+st.divider()
 # ==================== DECISIÓN ESTADÍSTICA ====================
 with st.container():
     st.subheader("📌 Decisión Estadística")
@@ -190,7 +191,7 @@ with st.container():
 """
         st.warning(mensaje)
 
-st.markdown("---")
+st.divider()
 # ==================== INTERPRETACIÓN ADICIONAL ====================
 with st.expander("📖 ¿Qué significa el p-valor?"):
     st.markdown(f"""
@@ -214,13 +215,9 @@ with st.expander("📋 Ver datos del período"):
                        file_name=f"contraste_pace_ppg_{inicio}_a_{fin}.csv", 
                        mime="text/csv")
 
-st.markdown("---")# ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Correlación", use_container_width=True):
-        st.switch_page("pages/3Correlacion.py")
-with col_n2:
-    if st.button("➡️ Ir a Regresión", use_container_width=True):
-        st.switch_page("pages/5Regresion.py")
+st.divider()
+
+# ==================== NAVEGACIÓN ====================
+navegacion("Correlación", "Regresión")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **p-valor = {p_valor:.4f}** | **r = {r:.3f}**")

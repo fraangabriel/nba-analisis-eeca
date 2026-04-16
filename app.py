@@ -16,7 +16,7 @@ mostrar_sidebar_inicio()
 # ==================== CONTENIDO PRINCIPAL ====================
 st.title("🏀 Velocidad vs Eficiencia: La Década que Cambió la NBA")
 st.markdown("*Análisis estadístico de la transformación de la NBA (2013-2023)*")
-st.markdown("---")
+st.divider()
 
 
 # ==================== BANNER HORIZONTAL ====================
@@ -45,7 +45,7 @@ with st.container(border=True):
     explicando de forma clara por qué los partidos de hoy son tan diferentes a los de hace diez años.
     """)
 
-st.markdown("---")
+st.divider()
 
 # Planteamiento del Problema
 with st.container(border=True):
@@ -59,7 +59,7 @@ with st.container(border=True):
     Este trabajo busca responder estas interrogantes mediante un análisis estadístico riguroso de 10 temporadas completas.
     """)
 
-st.markdown("---")
+st.divider()
 
 # Objetivo General
 with st.container(border=True):
@@ -69,7 +69,7 @@ with st.container(border=True):
     > evaluando el papel fundamental que ha desempeñado la efectividad de tiro en esta evolución.
     """)
 
-st.markdown("---")
+st.divider()
 
 # Objetivos Específicos
 st.markdown("## 📌 Objetivos Específicos")
@@ -84,7 +84,7 @@ with col1:
         if st.button("📈 Ver evolución histórica →", use_container_width=True, key="btn_obj1"):
             st.switch_page("pages/2Exploracion_de_datos.py")
     
-    st.markdown("---")
+    st.divider()
     
     with st.container(border=True):
         st.markdown("### 📈 Objetivo 2")
@@ -101,7 +101,7 @@ with col2:
         if st.button("📐 Ver impacto en precisión →", use_container_width=True, key="btn_obj3"):
             st.switch_page("pages/4Contrastes.py")
     
-    st.markdown("---")
+    st.divider()
     
     with st.container(border=True):
         st.markdown("### 🔮 Objetivo 4")
@@ -110,7 +110,7 @@ with col2:
         if st.button("🧪 Ver factor de crecimiento →", use_container_width=True, key="btn_obj4"):
             st.switch_page("pages/5Regresión.py")
 
-st.markdown("---")
+st.divider()
 
 # Metodología
 with st.expander("📊 Ver metodología del análisis"):
@@ -131,7 +131,7 @@ with st.expander("📊 Ver metodología del análisis"):
     - **eFG% (Eficiencia):** Effective Field Goal Percentage
     """)
 
-st.markdown("---")
+st.divider()
 
 # Respuesta Esperada
 st.info("""
@@ -145,6 +145,10 @@ st.info("""
 st.success("👈 **Usa el menú lateral** para explorar cada objetivo específico del estudio.")
 
 # ==================== PIE DE PÁGINA ====================
-st.markdown("---")
+st.divider()
 st.caption("🏀 Universidad Central de Venezuela - Escuela de Estadística y Ciencias Actuariales")
 st.caption("📊 Proyecto de Análisis NBA 2013-2023 | Velocidad vs Eficiencia")
+
+st.divider()
+if st.button("Ir a Teoría ➡️", use_container_width=True):
+                st.switch_page("pages/1Teoría.py")

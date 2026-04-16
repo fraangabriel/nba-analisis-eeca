@@ -5,12 +5,13 @@ import plotly.express as px
 import plotly.graph_objects as go
 import scipy.stats as stats
 from modules.style import aplicar_estilos_globales
-from modules.sidebar import mostrar_sidebar_secciones 
+from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Correlación NBA", layout="wide")
 st.title("📉 Análisis de Correlación")
 st.markdown("Mide la relación entre ritmo de juego, puntos por partido y eficiencia de tiro mediante coeficientes estadísticos.")
-st.markdown("---")
+st.divider()
 
 # ==================== BANNER CORRELACIÓN ====================
 st.markdown(
@@ -81,7 +82,7 @@ with st.container():
 idx_i, idx_f = temps.index(inicio), temps.index(fin)
 df = df_raw.iloc[idx_i:idx_f+1].copy()
 
-st.markdown("---")
+st.divider()
 
 # ==================== SELECTOR DE VARIABLES ====================
 with st.container():
@@ -108,7 +109,7 @@ with st.container():
         st.markdown("**Variable Dependiente (Y - Efecto)**")
         var_y = st.selectbox("Selecciona Y", list(vars_dict.keys()), index=0, format_func=lambda x: vars_dict[x], label_visibility="collapsed")
 
-st.markdown("---")
+st.divider()
 # ==================== BOTONES ARRIBA (como en exploración) ====================
 with st.container():
     st.subheader("🎯 Análisis disponibles")
@@ -131,7 +132,7 @@ with st.container():
         if st.button("🔄 Comparar", use_container_width=True):
             st.session_state.seccion_correlacion = 'comparar'
 
-st.markdown("---")
+st.divider()
 # ==================== CÁLCULOS BASE ====================
 x, y = df[var_x], df[var_y]
 n = len(df)
@@ -328,14 +329,7 @@ with st.expander("📋 Ver tabla completa de datos"):
     csv = df_show.to_csv(index=False).encode('utf-8')
     st.download_button("📥 Descargar CSV", data=csv, file_name=f"correlacion_{inicio}_a_{fin}.csv", mime="text/csv")
 
-st.markdown("---")
+st.divider()
 
 # ==================== NAVEGACIÓN ====================
-# ==================== NAVEGACIÓN ====================
-col_n1, col_n2 = st.columns(2)
-with col_n1:
-    if st.button("◀ Volver a Exploración", use_container_width=True):
-        st.switch_page("pages/2Exploracion_de_datos.py")  
-with col_n2:
-    if st.button("➡️ Ir a Contrastes", use_container_width=True):
-        st.switch_page("pages/4Contrastes.py")  
+navegacion("Exploración", "Contrastes")

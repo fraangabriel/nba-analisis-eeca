@@ -5,10 +5,11 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from modules.style import aplicar_estilos_globales
 from modules.sidebar import mostrar_sidebar_secciones
+from modules.navegacion import navegacion
 
 st.set_page_config(page_title="Exploración NBA", layout="wide")
 st.title("📊 Exploración de Datos NBA (2013-2023)")
-st.markdown("---")
+st.divider()
 
 st.markdown(
     """
@@ -111,7 +112,7 @@ with st.container():
     with col_b3:
         st.session_state.mostrar_detalles = st.toggle("🔧 Ver detalles técnicos", value=st.session_state.mostrar_detalles)
 
-st.markdown("---")
+st.divider()
 
 # ==================== APLICAR FILTROS ====================
 idx_inicio = temporadas_disponibles.index(temporada_inicio)
@@ -150,7 +151,7 @@ with st.container():
         if st.session_state.mostrar_detalles:
             st.caption(f"Inicio: {efg_inicio:.3f}")
 
-st.markdown("---")
+st.divider()
 
 # ==================== BOTONES DE GRÁFICOS ====================
 with st.container():
@@ -174,7 +175,7 @@ with st.container():
         if st.button("📊 Comparación Triple", use_container_width=True):
             st.session_state.mostrar_comparacion_triple = True
     
-    st.markdown("---")
+    st.divider()
 
 # ==================== GRÁFICO PRINCIPAL ====================
 if not st.session_state.mostrar_comparacion_triple:
@@ -227,7 +228,7 @@ else:
             st.session_state.mostrar_comparacion_triple = False
             st.rerun()
 
-st.markdown("---")
+st.divider()
 
 # ==================== TABLA OPCIONAL ====================
 if mostrar_tabla:
@@ -242,16 +243,13 @@ if mostrar_tabla:
         csv = df_tabla.to_csv(index=False).encode('utf-8')
         st.download_button("📥 Descargar CSV", data=csv, file_name=f"datos_nba_{temporada_inicio}_a_{temporada_fin}.csv",
                           mime="text/csv", use_container_width=True)
+    st.divider()
 
-st.markdown("---")
+
 
 # ==================== CONCLUSIÓN Y NAVEGACIÓN ====================
-with st.container():
-    col_c1, col_c2 = st.columns([2, 1])
-    with col_c1:
-        st.success("💡 El aumento en los puntos se debe a **mayor ritmo** y **mejor eficiencia**.")
-    with col_c2:
-        if st.button("➡️ Ir a Correlación", use_container_width=True):
-            st.switch_page("pages/3Correlacion.py")
-    
-    st.info(f"📌 Período: {temporada_inicio} → {temporada_fin} | Temporadas: {len(df_filtrado)}")
+st.success("💡 El aumento en los puntos se debe a **mayor ritmo** y **mejor eficiencia**.")
+st.info(f"📌 Período: {temporada_inicio} → {temporada_fin} | Temporadas: {len(df_filtrado)}")
+
+st.divider()
+navegacion("Teoría", "Correlación")
