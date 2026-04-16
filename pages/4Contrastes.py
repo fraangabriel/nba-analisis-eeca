@@ -5,7 +5,8 @@ import plotly.graph_objects as go
 from scipy import stats
 import sys
 import os
-
+from modules.style import aplicar_estilos_globales
+from modules.sidebar import mostrar_sidebar
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
 
@@ -14,6 +15,11 @@ st.title("📐 Contraste de Hipótesis: Ritmo vs Puntos")
 st.markdown("Verificamos si la relación entre **ritmo de juego (Pace)** y **puntos por partido (PPG)** es estadísticamente significativa.")
 st.markdown("---")
 
+# Aplicar estilos globales
+aplicar_estilos_globales()
+
+# Mostrar sidebar
+mostrar_sidebar()
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:
     st.session_state['df_resumen'] = get_resumen_temporadas()
@@ -192,7 +198,7 @@ with col_n1:
     if st.button("◀ Volver a Correlación", use_container_width=True):
         st.switch_page("pages/3Correlacion.py")
 with col_n2:
-    if st.button("➡️ Ir a Regresion", use_container_width=True):
+    if st.button("➡️ Ir a Regresión", use_container_width=True):
         st.switch_page("pages/5Regresion.py")
 
 st.caption(f"📌 **Período:** {inicio} → {fin} | **n = {n}** temporadas | **p-valor = {p_valor:.4f}** | **r = {r:.3f}**")

@@ -4,11 +4,19 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import scipy.stats as stats
+from modules.style import aplicar_estilos_globales
+from modules.sidebar import mostrar_sidebar 
 
 st.set_page_config(page_title="Correlación NBA", layout="wide")
 st.title("📉 Análisis de Correlación")
 st.markdown("Mide la relación entre ritmo de juego, puntos por partido y eficiencia de tiro mediante coeficientes estadísticos.")
 st.markdown("---")
+
+# Aplicar estilos globales
+aplicar_estilos_globales()
+
+# Mostrar sidebar
+mostrar_sidebar()
 
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:

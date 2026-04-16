@@ -3,10 +3,18 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
+from modules.style import aplicar_estilos_globales
+from modules.sidebar import mostrar_sidebar
 
 st.set_page_config(page_title="Exploración NBA", layout="wide")
 st.title("📊 Exploración de Datos NBA (2013-2023)")
 st.markdown("---")
+
+# Aplicar estilos globales
+aplicar_estilos_globales()
+
+# Mostrar sidebar
+mostrar_sidebar()
 
 # ==================== CARGA DE DATOS ====================
 if 'df_resumen' not in st.session_state:
