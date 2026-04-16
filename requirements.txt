@@ -1,9 +1,7 @@
-streamlit
-pandas
+duckdb
 numpy
+pandas
+plotly
 scipy
 statsmodels
-plotly
-patsy
-matplotlib
-seaborn
+streamlit

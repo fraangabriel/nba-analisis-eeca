@@ -98,7 +98,6 @@ if n < 4:
     st.stop()
 
 st.divider()
-st.divider()
 
 # ==================== CÁLCULOS DEL MODELO ====================
 # Ajustar modelo (se usa en ambas secciones)
