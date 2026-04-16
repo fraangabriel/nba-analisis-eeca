@@ -4,6 +4,8 @@ import numpy as np
 import plotly.express as px
 import sys
 import os
+from modules.style import aplicar_estilos_globales
+from modules.sidebar import mostrar_sidebar
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from modules.database import get_resumen_temporadas
@@ -13,6 +15,12 @@ st.set_page_config(page_title="Regresión NBA", layout="wide")
 st.title("🧪 Modelo de Regresión Lineal")
 st.markdown("Cuantificamos cómo el **ritmo de juego (Pace)** predice los **puntos por partido (PPG)** mediante un modelo de regresión lineal.")
 st.markdown("---")
+
+# Aplicar estilos globales
+aplicar_estilos_globales()
+
+# Mostrar sidebar
+mostrar_sidebar()
 
 # ==================== INICIALIZAR ESTADO ====================
 if 'seccion_regresion' not in st.session_state:
