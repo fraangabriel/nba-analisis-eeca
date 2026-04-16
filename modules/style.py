@@ -53,7 +53,7 @@ def aplicar_estilos_globales():
                 border-radius: 8px;
                 font-weight: bold;
                 transition: all 0.3s;
-                background-color: #c8102e;
+                background-color: #7a1525;
                 color: white;
             }
             
